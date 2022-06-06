@@ -1,8 +1,11 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { Link } from 'react-router-dom'
+import {SessionContext} from "../session/SessionContext"
 
 const Auth = () => {
+  const [state] = useContext(SessionContext)
   return (
-    <div>Auth</div>
+    state.user.token === "" ?(<Link to="/Login" className='links'>Iniciar sesion</Link>):(<Link to={"/"} className='links'>Cerrar Session</Link>)
   )
 }
 

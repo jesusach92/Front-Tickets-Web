@@ -1,8 +1,13 @@
-import React from 'react'
+import useMediaQuery from '@mui/material/useMediaQuery'
+import Movil from './Navbar/Movil'
+import Tablet from './Navbar/Tablet'
+import Web from './Navbar/Web'
 
 const NavBar = () => {
+  const movil = useMediaQuery('(max-width: 600px)')
+  const tablet = useMediaQuery('(max-width:900px)') 
   return (
-    <div>NavBar</div>
+    (movil && tablet) ?(<Movil/>):(tablet?(<Tablet/>):(<Web/>))
   )
 }
 

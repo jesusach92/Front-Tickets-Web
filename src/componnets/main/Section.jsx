@@ -1,8 +1,10 @@
-import React from 'react'
+import useMediaQuery from '@mui/material/useMediaQuery'
 
 const Section = () => {
+  const movil = useMediaQuery('(max-width: 600px)')
+  const tablet = useMediaQuery('(max-width:900px)') 
   return (
-    <div>Section</div>
+    (movil && tablet) ?(<>Movil</>):(tablet?(<>Tablet</>):(<>Web</>))
   )
 }
 
