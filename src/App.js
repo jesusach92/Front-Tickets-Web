@@ -1,5 +1,5 @@
 import { useContext, useEffect } from "react";
-import Router from "./componnets/router/Router";
+import Router from "./componnets/router/Router.jsx";
 import { SessionContext }  from "./componnets/session/SessionContext";
 import { Types } from "./componnets/session/SessionReducer";
 

@@ -23,13 +23,14 @@ code {
   align-items: center;
   justify-content: space-between;
   background-color: var(--black);
-  border-bottom: 1px solid rgba(0,0,0, .1) ;
+  border-bottom: 1px solid rgba(0,0,0, .1);
+  height: 70px;
+  box-sizing: border-box;
 }
 .logo{
-  margin: 10px 10px 10px 10px;
+  margin: 20px 10px 20px 10px;
   width: 100px;
 }
-
 .links{
   text-decoration: none !important;
   margin: 10px 10px 10px 5px;
@@ -52,6 +53,8 @@ code {
   justify-content: space-between;
   background-color: var(--black);
   border-bottom: 1px solid rgba(0,0,0, .1) ;
+  box-sizing: border-box;
+  height: 100px;
 }
 .logo-tablet{
   margin: 20px 10px 5px 10px;
@@ -60,17 +63,17 @@ code {
 svg{
   fill: #fff;
 }
-
-
 .navbar-Web{
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-evenly;
   background-color: var(--black);
   border-bottom: 1px solid rgba(0,0,0, .1) ;
+  height: 70px;
+  box-sizing: border-box;
 }
 .logo-Web{
   margin: 10px 20px 5px 30px;
-  width: 200px;
+  width: 100px;
 }
