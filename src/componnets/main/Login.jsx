@@ -1,104 +1,105 @@
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
-import Paper from '@mui/material/Paper';
-import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
-import PersonIcon from '@mui/icons-material/Person';
-import Typography from '@mui/material/Typography';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import logo from '../../assets/logo.png'
-import { useMediaQuery } from '@mui/material';
-
-
+import Avatar from "@mui/material/Avatar";
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Checkbox from "@mui/material/Checkbox";
+import Link from "@mui/material/Link";
+import Paper from "@mui/material/Paper";
+import Box from "@mui/material/Box";
+import Grid from "@mui/material/Grid";
+import PersonIcon from "@mui/icons-material/Person";
+import Typography from "@mui/material/Typography";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import logo from "../../assets/logo.png";
+import { useMediaQuery } from "@mui/material";
 
 function Copyright(props) {
   return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
+    <Typography
+      variant="body2"
+      color="text.secondary"
+      align="center"
+      {...props}
+    >
+      {"Copyright © "}
       <Link color="inherit" href="https://www.texin.com.mx/">
         Texin
-      </Link>{' '}
+      </Link>{" "}
       {new Date().getFullYear()}
-      {'.'}
+      {"."}
     </Typography>
   );
 }
 
-const themeDefault = createTheme()
+const themeDefault = createTheme();
 
 const theme = createTheme({
-  components:{
-    
-    MuiCheckbox:{
-      styleOverrides:{
-        colorPrimary:{
-          color:'gray',
-        },
-        checked:{
-         color:'gray'
-        },
-        root:{
-          checked:{
-            color:'gray'
-          }
-        },
-      }
-    }
-  }
+  palette: {
+    primary: {
+      main: "#fa5d02",
+    },
+  },
 });
 
 export default function Login() {
-  const movil = useMediaQuery('(max-width: 600px)')
-  const tablet = useMediaQuery('(max-width:900px)') 
+  const movil = useMediaQuery("(max-width: 600px)");
+  const tablet = useMediaQuery("(max-width:900px)");
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     console.log({
-      email: data.get('email'),
-      password: data.get('password'),
+      email: data.get("email"),
+      password: data.get("password"),
     });
   };
 
   return (
     <ThemeProvider theme={theme}>
-      <Grid container component="main" sx={{ height: '100vh' }}>
-        <CssBaseline />
+      <Grid container component="main" sx={{ height: "100vh" }}>
         <Grid
           item
-          xs={1}
+          xs={false}
           sm={2}
           md={2}
           sx={{
             backgroundImage: `url(${logo})`,
-            backgroundRepeat: 'no-repeat',
-            backgroundSize:(t)=> (movil && tablet) ? '2rem':tablet ? '80px':'100px',
-            backgroundColor: 'black',
-            backgroundPosition: '50% 3%'
+            backgroundRepeat: "no-repeat",
+            backgroundSize: (t) =>
+              movil && tablet ? "2rem" : tablet ? "80px" : "150px",
+            backgroundColor: "black",
+            backgroundPosition: "50% 3%",
           }}
+        ></Grid>
+        <Grid
+          item
+          xs={12}
+          sm={10}
+          md={10}
+          component={Paper}
+          elevation={6}
+          square
         >
-        </Grid>
-        <Grid item xs={11} sm={10} md={10} component={Paper} elevation={6} square>
           <Box
             sx={{
               my: 8,
               mx: 4,
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
             }}
           >
-            <Avatar sx={{ m: 1, bgcolor: 'black' }}>
+            <Avatar sx={{ m: 1, bgcolor: "#fa5d02" }}>
               <PersonIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
               Iniciar Sesion
             </Typography>
-            <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
+            <Box
+              component="form"
+              noValidate
+              onSubmit={handleSubmit}
+              sx={{ mt: 1 }}
+            >
               <TextField
                 margin="normal"
                 required
@@ -109,7 +110,7 @@ export default function Login() {
                 autoComplete="email"
                 autoFocus
                 sx={{
-                  borderColor:'gray'
+                  borderColor: "gray",
                 }}
               />
               <TextField
@@ -123,17 +124,28 @@ export default function Login() {
                 autoComplete="current-password"
               />
               <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
+                control={<Checkbox value="remember" />}
                 label="Recordarme"
               />
               <Button
                 type="submit"
                 fullWidth
                 variant="contained"
-                sx={{ mt: 3, mb: 2, backgroundColor:`${theme.palette.grey[600]}`, textTransform:'none'   }}
+                sx={{
+                  mt: 3,
+                  mb: 2,
+                  textTransform: "none",
+                }}
               >
                 Iniciar Sesion
               </Button>
+              <Grid container>
+                <Grid item xs>
+                  <Link href="/" variant="body2">
+                    Nuevo Ticket
+                  </Link>
+                </Grid>
+              </Grid>
               <Copyright sx={{ mt: 5 }} />
             </Box>
           </Box>

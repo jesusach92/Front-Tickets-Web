@@ -77,3 +77,8 @@ svg{
   margin: 10px 20px 5px 30px;
   width: 100px;
 }
+
+.css-19mwbe3-MuiButtonBase-root-MuiCheckbox-root.Mui-checked, .css-19mwbe3-MuiButtonBase-root-MuiCheckbox-root.MuiCheckbox-indeterminate
+{
+  color: var(--orange) !important;
+}
