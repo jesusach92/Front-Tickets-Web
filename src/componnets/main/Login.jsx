@@ -12,6 +12,9 @@ import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import logo from "../../assets/logo.png";
 import { useMediaQuery } from "@mui/material";
+import { useContext, useEffect } from "react";
+import { SessionContext } from "../session/SessionContext";
+import { Types } from "../session/SessionReducer";
 
 function Copyright(props) {
   return (
@@ -31,7 +34,6 @@ function Copyright(props) {
   );
 }
 
-const themeDefault = createTheme();
 
 const theme = createTheme({
   palette: {
@@ -42,10 +44,18 @@ const theme = createTheme({
 });
 
 export default function Login() {
+	const [ , dispatch]= useContext(SessionContext)
+	const user = JSON.parse(window.localStorage.getItem('session'))
+	useEffect(() => {
+	  if(user)
+	  dispatch({type: Types.authLogin, payload: user})
+	  return () => null
+	}, [])
+
   const movil = useMediaQuery("(max-width: 600px)");
   const tablet = useMediaQuery("(max-width:900px)");
   const handleSubmit = (event) => {
-    event.preventDefault();
+    // event.preventDefault();
     const data = new FormData(event.currentTarget);
     console.log({
       email: data.get("email"),
