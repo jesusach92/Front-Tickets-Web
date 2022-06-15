@@ -46,6 +46,7 @@ const theme = createTheme({
 export default function Login() {
 	const [ , dispatch]= useContext(SessionContext)
 	const user = JSON.parse(window.localStorage.getItem('session'))
+
 	useEffect(() => {
 	  if(user)
 	  dispatch({type: Types.authLogin, payload: user})
@@ -55,7 +56,7 @@ export default function Login() {
   const movil = useMediaQuery("(max-width: 600px)");
   const tablet = useMediaQuery("(max-width:900px)");
   const handleSubmit = (event) => {
-    // event.preventDefault();
+    event.preventDefault();
     const data = new FormData(event.currentTarget);
     console.log({
       email: data.get("email"),
@@ -132,10 +133,6 @@ export default function Login() {
                 type="password"
                 id="passwordEmploye"
                 autoComplete="current-password"
-              />
-              <FormControlLabel
-                control={<Checkbox value="remember" />}
-                label="Recordarme"
               />
               <Button
                 type="submit"
