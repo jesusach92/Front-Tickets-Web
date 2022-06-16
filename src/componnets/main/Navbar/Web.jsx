@@ -12,7 +12,7 @@ const Web = () => {
     </Tooltip>
       <div>
         <Tooltip title="Crea un nuevo Ticket" arrow>
-    <Link to="/" className='links'>Nuevo Ticket</Link>
+    <Link to="/NewTicket" className='links'>Nuevo Ticket</Link>
     </Tooltip>
     <Auth></Auth>
     </div>

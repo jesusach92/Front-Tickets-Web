@@ -1,8 +1,6 @@
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
@@ -15,6 +13,7 @@ import { useMediaQuery } from "@mui/material";
 import { useContext, useEffect } from "react";
 import { SessionContext } from "../session/SessionContext";
 import { Types } from "../session/SessionReducer";
+import { useNavigate } from "react-router-dom";
 
 function Copyright(props) {
   return (
@@ -44,6 +43,7 @@ const theme = createTheme({
 });
 
 export default function Login() {
+  const navigate = useNavigate()
 	const [ , dispatch]= useContext(SessionContext)
 	const user = JSON.parse(window.localStorage.getItem('session'))
 
@@ -148,9 +148,11 @@ export default function Login() {
               </Button>
               <Grid container>
                 <Grid item xs>
-                  <Link href="/" variant="body2">
-                    Nuevo Ticket
-                  </Link>
+                <ThemeProvider theme={theme}>
+            <Button size="large" sx={{
+					textTransform:"none",
+				}} onClick={e=> navigate("/NewTicket")}> Nuevo Ticket</Button>
+          </ThemeProvider>
                 </Grid>
               </Grid>
               <Copyright sx={{ mt: 5 }} />

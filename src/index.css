@@ -18,6 +18,7 @@ code {
     monospace;
 }
 .navbar-Movil{
+  
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -60,9 +61,6 @@ code {
   margin: 20px 10px 5px 10px;
   width: 90px;
 }
-svg{
-  fill: #fff;
-}
 .navbar-Web{
   display: flex;
   flex-direction: row;
@@ -71,6 +69,7 @@ svg{
   background-color: var(--black);
   border-bottom: 1px solid rgba(0,0,0, .1) ;
   height: 70px;
+  
   box-sizing: border-box;
 }
 .logo-Web{

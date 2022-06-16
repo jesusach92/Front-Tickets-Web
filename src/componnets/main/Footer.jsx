@@ -1,6 +1,6 @@
 import { Container, createTheme, ThemeProvider} from '@mui/material'
 import React from 'react'
-import logo from "../../assets/logo.png"
+import logo from "../../assets/logo-naranja.png"
 import {Link} from "react-router-dom"
 
 const themeDefault= createTheme()
@@ -11,7 +11,7 @@ const theme = createTheme({
             styleOverrides:{
                 root:{
                     height:'80px',
-                    backgroundColor:`${themeDefault.palette.grey[600]}`,
+                    backgroundColor:`${themeDefault.palette.grey[300]}`,
                     display:'flex',
                     flexDirection:'center',
                     alignItems:'center',

@@ -5,6 +5,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import { Button, Container } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Box } from "@mui/system";
+import {useNavigate} from "react-router-dom"
 
 const theme = createTheme({
   palette: {
@@ -15,6 +16,7 @@ const theme = createTheme({
 });
 
 const Movil = () => {
+  const navigate =useNavigate();
   return (
     <Box
       sx={{
@@ -31,9 +33,12 @@ const Movil = () => {
           placeholder="¿Como puedo ayudarte?"
           inputProps={{ "aria-label": "¿Como puedo ayudarte?" }}
         />
-        <IconButton type="submit" sx={{ p: "10px" }} aria-label="search">
+        <ThemeProvider theme={theme}>
+           <IconButton type="submit" sx={{ p: "10px" }} aria-label="search" color="primary">
           <SearchIcon />
         </IconButton>
+        </ThemeProvider>
+       
       </Paper>
       <Container fixed>
         <ThemeProvider theme={theme}>
@@ -46,6 +51,7 @@ const Movil = () => {
               mb: 2,
               textTransform: "none",
             }}
+            onClick= {e=> navigate("/NewTicket")}
           >
             Nuevo Ticket
           </Button>
