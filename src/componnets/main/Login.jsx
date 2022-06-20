@@ -9,11 +9,18 @@ import PersonIcon from "@mui/icons-material/Person";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import logo from "../../assets/logo.png";
-import { useMediaQuery } from "@mui/material";
-import { useContext, useEffect } from "react";
+import { Alert, Collapse, IconButton, useMediaQuery } from "@mui/material";
+import { useContext, useEffect, useState } from "react";
 import { SessionContext } from "../session/SessionContext";
 import { Types } from "../session/SessionReducer";
 import { useNavigate } from "react-router-dom";
+import { styled } from "@mui/material/styles";
+import { useFormik } from "formik";
+import * as yup from "yup";
+import CloseIcon from '@mui/icons-material/Close';
+import GppBadIcon from '@mui/icons-material/GppBad';
+import { AUTH } from "../../helpers/Const";
+import axios from "axios"
 
 function Copyright(props) {
   return (
@@ -33,36 +40,73 @@ function Copyright(props) {
   );
 }
 
+const Img = styled("img")({
+  margin: "auto",
+  marginTop: "2rem",
+  display: "block",
+  maxWidth: "60%",
+});
 
 const theme = createTheme({
   palette: {
     primary: {
       main: "#fa5d02",
     },
+	error:{
+		main:"#FF3202"
+	}
   },
 });
 
-export default function Login() {
-  const navigate = useNavigate()
-	const [ , dispatch]= useContext(SessionContext)
-	const user = JSON.parse(window.localStorage.getItem('session'))
+const validationSchema = yup.object({
+  userName: yup
+    .string("Ingresa tu nombre de Usuario")
+    .email("Tu nombre de usuario no es valido")
+    .required("El usuario es requerido"),
+  passwordEmploye: yup
+    .string("Ingresa tu contraseña")
+    .min(8, "Contraseña minima de 8 caracteres")
+    .required("Contraseña requerida"),
+});
 
-	useEffect(() => {
-	  if(user)
-	  dispatch({type: Types.authLogin, payload: user})
-	  return () => null
-	}, [])
+const sendData = async(values)=>{
+try {
+	const {data}= await axios.post(`${AUTH}/login`,values)
+	console.log(data)
+} catch (error) {
+	console.log(error)
+}
+}
+
+export default function Login() {
+  const navigate = useNavigate();
+  const [flag, setFlag] = useState(true);
+  const [, dispatch] = useContext(SessionContext);
+  const user = JSON.parse(window.localStorage.getItem("session"));
+  const dataFormik = useFormik({
+    initialValues: {
+      userName: "",
+      passwordEmploye: "",
+    },
+    validationSchema: validationSchema,
+    onSubmit:sendData
+  })
+
+  useEffect(()=>
+  {
+	if(flag){
+		setTimeout(()=>{
+			setFlag(false)
+		},2000)}
+  })
+
+  useEffect(() => {
+    if (user) dispatch({ type: Types.authLogin, payload: user });
+    return () => null;
+  }, []);
 
   const movil = useMediaQuery("(max-width: 600px)");
   const tablet = useMediaQuery("(max-width:900px)");
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
-  };
 
   return (
     <ThemeProvider theme={theme}>
@@ -73,14 +117,26 @@ export default function Login() {
           sm={2}
           md={2}
           sx={{
-            backgroundImage: `url(${logo})`,
-            backgroundRepeat: "no-repeat",
+            // backgroundImage: `url(${logo})`,
+            // backgroundRepeat: "no-repeat",
             backgroundSize: (t) =>
               movil && tablet ? "2rem" : tablet ? "80px" : "150px",
-            backgroundColor: "black",
+            backgroundColor: "rgba(0,0,0,0.85)",
             backgroundPosition: "50% 3%",
           }}
-        ></Grid>
+        >
+          <Link onClick={(e) => navigate("/")}>
+            <Img
+              alt="Texin S.A de C.V"
+              src={logo}
+              sx={{
+                [theme.breakpoints.down("sm")]: {
+                  display: "none",
+                },
+              }}
+            ></Img>
+          </Link>
+        </Grid>
         <Grid
           item
           xs={12}
@@ -105,10 +161,26 @@ export default function Login() {
             <Typography component="h1" variant="h5">
               Iniciar Sesion
             </Typography>
-            <Box
+            <Collapse in={flag}>
+			<Alert severity="error" 
+			icon={<GppBadIcon fontSize="inherit"></GppBadIcon>}
+			action={
+			<IconButton
+				aria-label="close"
+				color="inherit"
+				size="small"
+				onClick={e=>setFlag(false)}
+				>
+				<CloseIcon/>
+			</IconButton>
+			}>
+				Mensaje
+			</Alert>
+			</Collapse>
+			<Box
               component="form"
               noValidate
-              onSubmit={handleSubmit}
+              onSubmit={dataFormik.handleSubmit}
               sx={{ mt: 1 }}
             >
               <TextField
@@ -120,6 +192,15 @@ export default function Login() {
                 name="userName"
                 autoComplete="email"
                 autoFocus
+                value={dataFormik.values.userName}
+                error={
+                  dataFormik.touched.userName &&
+                  Boolean(dataFormik.errors.userName)
+                }
+                onChange={dataFormik.handleChange}
+                helperText={
+                  dataFormik.touched.userName && dataFormik.errors.userName
+                }
                 sx={{
                   borderColor: "gray",
                 }}
@@ -133,6 +214,16 @@ export default function Login() {
                 type="password"
                 id="passwordEmploye"
                 autoComplete="current-password"
+                value={dataFormik.values.passwordEmploye}
+                error={
+                  dataFormik.touched.passwordEmploye &&
+                  Boolean(dataFormik.errors.passwordEmploye)
+                }
+                onChange={dataFormik.handleChange}
+                helperText={
+                  dataFormik.touched.passwordEmploye &&
+                  dataFormik.errors.passwordEmploye
+                }
               />
               <Button
                 type="submit"
@@ -148,11 +239,18 @@ export default function Login() {
               </Button>
               <Grid container>
                 <Grid item xs>
-                <ThemeProvider theme={theme}>
-            <Button size="large" sx={{
-					textTransform:"none",
-				}} onClick={e=> navigate("/NewTicket")}> Nuevo Ticket</Button>
-          </ThemeProvider>
+                  <ThemeProvider theme={theme}>
+                    <Button
+                      size="large"
+                      sx={{
+                        textTransform: "none",
+                      }}
+                      onClick={(e) => navigate("/NewTicket")}
+                    >
+                      {" "}
+                      Nuevo Ticket
+                    </Button>
+                  </ThemeProvider>
                 </Grid>
               </Grid>
               <Copyright sx={{ mt: 5 }} />

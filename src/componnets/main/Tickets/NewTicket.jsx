@@ -4,19 +4,15 @@ import {
   Container,
   createTheme,
   Divider,
-  FormGroup,
-  FormLabel,
   Grid,
   MenuItem,
-  Stack,
   TextField,
   ThemeProvider,
-  Tooltip,
   Typography,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import SendIcon from "@mui/icons-material/Send";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { SessionContext } from "../../session/SessionContext";
 
 const theme = createTheme({
@@ -49,10 +45,14 @@ const NewTicket = () => {
   const [state] = useContext(SessionContext);
   const { user } = state;
   const navigate = useNavigate();
+  const [data, setData] = useState({});
 
   const sendData = (event) => {
-    //event.preventDefault();
-    console.log(event);
+    event.preventDefault();
+    const _formData = new FormData(event.currentTarget);
+    setData();
+    console.log(_formData.get("email"));
+
   };
   return (
     <Box>
@@ -81,13 +81,28 @@ const NewTicket = () => {
                 <Divider variant="middle" />
               </Typography>
               <Grid mt={3} container component="form" onSubmit={sendData}>
+                <Grid item xs={12}>
+                  <Typography component="div">
+                    <Box
+                      sx={{
+                        fontWeight: 300,
+                        fontSize: "1.5rem",
+                        color: "rgba(1,1,1,0.6)",
+                      }}
+                    >
+                      Envianos tu Problema
+                    </Box>
+                  </Typography>
+                </Grid>
                 <Grid item xl={12} xs={true} sm={12} md={12} lg={12}>
                   {!user.auth ? (
                     <TextField
                       label="No. de Referencia"
                       required
+                      name="ref_Number"
                       placeholder="Numero de 10 digitos"
                       size="small"
+                      margin="normal"
                       helperText="Numero proporcionado por tu agente Texin"
                       sx={{
                         [theme.breakpoints.down("lg")]: {
@@ -101,21 +116,25 @@ const NewTicket = () => {
                   ) : (
                     <></>
                   )}
-				  <TextField
-                      label="Asunto"
-                      required
-                      placeholder="Asunto"
-                      size="small"
-                      margin="normal"
-                      sx={{
-                        [theme.breakpoints.down("lg")]: {
-                          width: "100%",
-                        },
-                        [theme.breakpoints.up("sm")]: {
-                          width: "60%",
-                        },
-                      }}></TextField><TextField
+                  <TextField
+                    label="Asunto"
+                    required
+                    name="Subject"
+                    placeholder="Asunto"
+                    size="small"
+                    margin="normal"
+                    sx={{
+                      [theme.breakpoints.down("lg")]: {
+                        width: "100%",
+                      },
+                      [theme.breakpoints.up("sm")]: {
+                        width: "60%",
+                      },
+                    }}
+                  ></TextField>
+                  <TextField
                     select
+					name="cetegory"
                     size="small"
                     label="Categoria"
                     helperText="Selecciona tu categoria"
@@ -129,10 +148,10 @@ const NewTicket = () => {
                       },
                     }}
                   >
-					<MenuItem>
-					</MenuItem>
-				  </TextField>
-				  <TextField
+                    <MenuItem value={10}>Diez</MenuItem>
+                  </TextField>
+                  <TextField
+				  	name="message"
                     label="Mensaje"
                     margin="normal"
                     multiline
@@ -149,43 +168,90 @@ const NewTicket = () => {
                     }}
                     placeholder="Describe a detalle tu problema"
                   ></TextField>
-				  <TextField
-                      label="Correo Electronico"
-                      margin="normal"
-                      required
-                      placeholder="Asunto"
-                      size="small"
-                      sx={{
-                        [theme.breakpoints.down("lg")]: {
-                          width: "100%",
-                        },
-                        [theme.breakpoints.up("sm")]: {
-                          width: "51%",
-                        },
-                      }}
-                    ></TextField>
-				<TextField
-                      required
-					  label="Nombre Completo"
-                      placeholder="Nombre"
-                      size="small"
-					  margin="normal"
-                      sx={{
-                        [theme.breakpoints.down("lg")]: {
-                          width: "100%",
-                        },
-                        [theme.breakpoints.up("sm")]: {
-                          width: "51%",
-                        },
-                      }}
-                    ></TextField>   
+                  <TextField
+				  	name="email"
+                    label="Correo Electronico"
+                    margin="normal"
+                    required
+                    placeholder="Asunto"
+                    size="small"
+                    sx={{
+                      [theme.breakpoints.down("lg")]: {
+                        width: "100%",
+                      },
+                      [theme.breakpoints.up("sm")]: {
+                        width: "51%",
+                      },
+                    }}
+                  ></TextField>
+                  <TextField
+				  	name="consumerName"
+                    required
+                    label="Nombre Completo"
+                    placeholder="Nombre"
+                    size="small"
+                    margin="normal"
+                    sx={{
+                      [theme.breakpoints.down("lg")]: {
+                        width: "100%",
+                      },
+                      [theme.breakpoints.up("sm")]: {
+                        width: "51%",
+                      },
+                    }}
+                  ></TextField>
+                  <TextField
+				  	name="files"
+                    type="file"
+                    label="Carga una imagen que nos ayude a identificar tu problema"
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                    inputProps={{
+                      accept: ".jpg,.png",
+                      multiple: true,
+                    }}
+                    size="large"
+                    margin="normal"
+                    helperText="Imagen png, jpg, jpge, no mayor a 20Mb"
+                    sx={{
+                      [theme.breakpoints.down("lg")]: {
+                        width: "100%",
+                      },
+                      [theme.breakpoints.up("sm")]: {
+                        width: "51%",
+                      },
+                    }}
+                  ></TextField>
+                  <TextField
+				  	name="priority"
+                    select
+                    size="small"
+                    label="Prioridad"
+                    margin="normal"
+                    sx={{
+                      [theme.breakpoints.down("lg")]: {
+                        width: "100%",
+                      },
+                      [theme.breakpoints.up("sm")]: {
+                        width: "51%",
+                      },
+                    }}
+                  >
+                    <MenuItem value={"Alta"}>Alta</MenuItem>
+                    <MenuItem value={"Media"}>Media</MenuItem>
+                    <MenuItem value={"Baja"}>Baja</MenuItem>
+                  </TextField>
                 </Grid>
-                <Grid item xs={12}>
+                <Grid item xs={12} mb={5}>
                   <Button
                     variant="contained"
                     type="submit"
                     size="large"
                     sx={{
+                      [theme.breakpoints.down("lg")]: {
+                        width: "100%",
+                      },
                       textTransform: "none",
                     }}
                     endIcon={<SendIcon />}
