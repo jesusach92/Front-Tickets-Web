@@ -17,10 +17,10 @@ import { useNavigate } from "react-router-dom";
 import { styled } from "@mui/material/styles";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import CloseIcon from '@mui/icons-material/Close';
-import GppBadIcon from '@mui/icons-material/GppBad';
+import CloseIcon from "@mui/icons-material/Close";
+import GppBadIcon from "@mui/icons-material/GppBad";
 import { AUTH } from "../../helpers/Const";
-import axios from "axios"
+import axios from "axios";
 
 function Copyright(props) {
   return (
@@ -52,14 +52,14 @@ const theme = createTheme({
     primary: {
       main: "#fa5d02",
     },
-	error:{
-		main:"#FF3202"
-	}
+    error: {
+      main: "#FF3202",
+    },
   },
 });
 
 const validationSchema = yup.object({
-  userName: yup
+  emailEmploye: yup
     .string("Ingresa tu nombre de Usuario")
     .email("Tu nombre de usuario no es valido")
     .required("El usuario es requerido"),
@@ -69,36 +69,43 @@ const validationSchema = yup.object({
     .required("Contraseña requerida"),
 });
 
-const sendData = async(values)=>{
-try {
-	const {data}= await axios.post(`${AUTH}/login`,values)
-	console.log(data)
-} catch (error) {
-	console.log(error)
-}
-}
-
 export default function Login() {
   const navigate = useNavigate();
-  const [flag, setFlag] = useState(true);
+  const [flag, setFlag] = useState(false);
   const [, dispatch] = useContext(SessionContext);
+  const [errors, setErrors] = useState({ message: "Error" });
   const user = JSON.parse(window.localStorage.getItem("session"));
+
+  const sendData = async (values) => {
+    try {
+      const {data, status}  = await axios.post(`${AUTH}/login`, values);
+      if(status === 200){
+       dispatch({ type: Types.authLogin, payload: data });
+      navigate("/")
+
+	  }
+    } catch (error) {
+      setFlag(true);
+      setErrors({message: error.response.data});
+      console.log(error);
+    }
+  };
   const dataFormik = useFormik({
     initialValues: {
-      userName: "",
+      emailEmploye: "",
       passwordEmploye: "",
     },
     validationSchema: validationSchema,
-    onSubmit:sendData
-  })
+    onSubmit: sendData,
+  });
 
-  useEffect(()=>
-  {
-	if(flag){
-		setTimeout(()=>{
-			setFlag(false)
-		},2000)}
-  })
+  useEffect(() => {
+    if (flag) {
+      setTimeout(() => {
+        setFlag(false);
+      }, 2000);
+    }
+  });
 
   useEffect(() => {
     if (user) dispatch({ type: Types.authLogin, payload: user });
@@ -162,22 +169,24 @@ export default function Login() {
               Iniciar Sesion
             </Typography>
             <Collapse in={flag}>
-			<Alert severity="error" 
-			icon={<GppBadIcon fontSize="inherit"></GppBadIcon>}
-			action={
-			<IconButton
-				aria-label="close"
-				color="inherit"
-				size="small"
-				onClick={e=>setFlag(false)}
-				>
-				<CloseIcon/>
-			</IconButton>
-			}>
-				Mensaje
-			</Alert>
-			</Collapse>
-			<Box
+              <Alert
+                severity="error"
+                icon={<GppBadIcon fontSize="inherit"></GppBadIcon>}
+                action={
+                  <IconButton
+                    aria-label="close"
+                    color="inherit"
+                    size="small"
+                    onClick={(e) => setFlag(false)}
+                  >
+                    <CloseIcon />
+                  </IconButton>
+                }
+              >
+                {errors.message}
+              </Alert>
+            </Collapse>
+            <Box
               component="form"
               noValidate
               onSubmit={dataFormik.handleSubmit}
@@ -188,18 +197,18 @@ export default function Login() {
                 required
                 fullWidth
                 id="userName"
-                label="Nombre de Usuario"
-                name="userName"
+                label="Nombre de Usuario o correo electronico"
+                name="emailEmploye"
                 autoComplete="email"
                 autoFocus
-                value={dataFormik.values.userName}
+                value={dataFormik.values.emailEmploye}
                 error={
-                  dataFormik.touched.userName &&
-                  Boolean(dataFormik.errors.userName)
+                  dataFormik.touched.emailEmploye &&
+                  Boolean(dataFormik.errors.emailEmploye)
                 }
                 onChange={dataFormik.handleChange}
                 helperText={
-                  dataFormik.touched.userName && dataFormik.errors.userName
+                  dataFormik.touched.emailEmploye && dataFormik.errors.emailEmploye
                 }
                 sx={{
                   borderColor: "gray",
@@ -247,7 +256,6 @@ export default function Login() {
                       }}
                       onClick={(e) => navigate("/NewTicket")}
                     >
-                      {" "}
                       Nuevo Ticket
                     </Button>
                   </ThemeProvider>

@@ -22,6 +22,7 @@ const SessionReducer = (state, action) => {
       };
 
     case Types.authLogin:
+      window.localStorage.setItem("session", action.payload)
       return {
         ...state,
         user: action.payload,
