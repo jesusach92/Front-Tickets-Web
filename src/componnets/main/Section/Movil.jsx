@@ -19,9 +19,6 @@ const Movil = () => {
   const navigate =useNavigate();
   return (
     <Box
-      sx={{
-        height: "calc(100vh - 150px)",
-      }}
     >
       <Paper
         component="form"

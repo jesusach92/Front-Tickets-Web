@@ -74,19 +74,17 @@ export default function Login() {
   const [flag, setFlag] = useState(false);
   const [, dispatch] = useContext(SessionContext);
   const [errors, setErrors] = useState({ message: "Error" });
-  const user = JSON.parse(window.localStorage.getItem("session"));
 
   const sendData = async (values) => {
     try {
-      const {data, status}  = await axios.post(`${AUTH}/login`, values);
-      if(status === 200){
-       dispatch({ type: Types.authLogin, payload: data });
-      navigate("/")
-
-	  }
+      const { data, status } = await axios.post(`${AUTH}/login`, values);
+      if (status === 200) {
+        dispatch({ type: Types.authLogin, payload: data });
+        navigate("/");
+      }
     } catch (error) {
       setFlag(true);
-      setErrors({message: error.response.data});
+      setErrors({ message: error.response.data });
       console.log(error);
     }
   };
@@ -107,11 +105,6 @@ export default function Login() {
     }
   });
 
-  useEffect(() => {
-    if (user) dispatch({ type: Types.authLogin, payload: user });
-    return () => null;
-  }, []);
-
   const movil = useMediaQuery("(max-width: 600px)");
   const tablet = useMediaQuery("(max-width:900px)");
 
@@ -124,8 +117,6 @@ export default function Login() {
           sm={2}
           md={2}
           sx={{
-            // backgroundImage: `url(${logo})`,
-            // backgroundRepeat: "no-repeat",
             backgroundSize: (t) =>
               movil && tablet ? "2rem" : tablet ? "80px" : "150px",
             backgroundColor: "rgba(0,0,0,0.85)",
@@ -208,7 +199,8 @@ export default function Login() {
                 }
                 onChange={dataFormik.handleChange}
                 helperText={
-                  dataFormik.touched.emailEmploye && dataFormik.errors.emailEmploye
+                  dataFormik.touched.emailEmploye &&
+                  dataFormik.errors.emailEmploye
                 }
                 sx={{
                   borderColor: "gray",

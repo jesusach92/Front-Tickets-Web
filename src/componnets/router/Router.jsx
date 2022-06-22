@@ -6,7 +6,6 @@ const Main = React.lazy(()=> import("../main/Main"))
 const Ticket = React.lazy(()=> import("../main/Ticket"))
 
 const Router = () => {
-
   return (
 
    <RouterDom>
