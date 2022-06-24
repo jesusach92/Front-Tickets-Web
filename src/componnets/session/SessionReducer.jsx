@@ -1,3 +1,5 @@
+import axios from "axios";
+import { AUTH } from "../../helpers/Const";
 
 const Types = {
   authLogin: "auth - Login",

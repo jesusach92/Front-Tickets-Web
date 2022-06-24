@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import Router from "./componnets/router/Router.jsx";
 import { SessionContext } from "./componnets/session/SessionContext.jsx";
-import {Types} from "./componnets/session/SessionReducer"
+import {initialValues, Types} from "./componnets/session/SessionReducer"
 import { Button, createTheme, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, ThemeProvider } from "@mui/material";
 import axios from "axios";
 import { AUTH } from "./helpers/Const.jsx";
@@ -19,34 +19,32 @@ const theme = createTheme({
 
 
 function App() {
-const [,dispatch] = useContext(SessionContext)
+const [state,dispatch] = useContext(SessionContext)
 const user = JSON.parse(localStorage.getItem('session'))|| ""
 const [open, setOpen] = useState(false)
+const [OpenMod, setOpenMod] = useState(false)
 
 
 useEffect(()=>{
   if(user.token){
-	dispatch({type:Types.authRefresh, payload: user})
-	if(sessionConsult(user)){
-	setOpen(true)
-	}
-	else{
-		console.log("Holaa");
-	}
-  }
+	sessionConsult();
+}
 },[])
 
-const sessionConsult = async (user)=>{
-	const {data,status} = await axios.get(`${AUTH}/update`,{ withCredentials: true })
-	if( status===200)
+const sessionConsult = async ()=>{
+	try {
+		const {data} = await axios.get(`${AUTH}/update`,{ withCredentials: true })
+		dispatch({type:Types.authRefresh, payload:data})
+	} catch (error) {
+	 if(error.response.status === 401 || error.response.status === 403)
 	{
-		return false
+		setOpen(true)
 	}
-	else if(status === 401)
-	{
-		return true
 	}
+}
 
+const sessionRefresh= async ()=>{
+	
 }
 
   return (
@@ -65,12 +63,15 @@ const sessionConsult = async (user)=>{
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={e=>setOpen(false)}>No</Button>
-          <Button onClick={e=>setOpen(false)} autoFocus>
+          <Button onClick={e=>{setOpen(false);dispatch({type:Types.authLogout,payload:initialValues})}}>No</Button>
+          <Button onClick={e=>sessionRefresh(true)} autoFocus>
             Si
           </Button>
         </DialogActions>
       </Dialog>
+	  <Dialog>
+
+	  </Dialog>
 	<Router/>
 	</ThemeProvider>
      

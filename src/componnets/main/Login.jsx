@@ -77,9 +77,8 @@ export default function Login() {
 
   const sendData = async (values) => {
     try {
-      const response = await axios.post(`${AUTH}/login`, values);
+      const response = await axios.post(`${AUTH}/login`, values,{withCredentials:true});
       if (response.status === 200) {
-        console.log(response);
         dispatch({ type: Types.authLogin, payload: response.data });
         navigate("/");
       }

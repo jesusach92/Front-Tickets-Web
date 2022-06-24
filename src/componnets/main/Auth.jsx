@@ -7,6 +7,8 @@ import Menu from "@mui/material/Menu";
 import { useNavigate } from "react-router-dom";
 import { Avatar } from "@mui/material";
 import { Types } from "../session/SessionReducer";
+import axios from "axios";
+import { AUTH } from "../../helpers/Const";
 
 const Auth = () => {
   const [state,dispatch] = useContext(SessionContext);
@@ -22,8 +24,13 @@ const Auth = () => {
     setAnchorEl(null);
   };
 
+const logout = async()=>{
+  dispatch({type: Types.authLogout})
+  await axios.put(`${AUTH}/logout`,undefined,{withCredentials:true})
+}
+
   return (
-      user.token.length > 1 ? (
+      user.token?.length > 1 ? (
         <div>
           <IconButton
             size="small"
@@ -54,7 +61,7 @@ const Auth = () => {
             <MenuItem onClick={(e) => navigate("/NewTicket")}>
               Nuevo Ticket
             </MenuItem>
-            <MenuItem onClick={e=>{dispatch({type: Types.authLogout})}}>Cerrar Sesion</MenuItem>
+            <MenuItem onClick={e=>{logout()}}>Cerrar Sesion</MenuItem>
           </Menu>
         </div>
       ) : (
