@@ -64,13 +64,18 @@ const sessionRefresh= async ()=>{
         </DialogContent>
         <DialogActions>
           <Button onClick={e=>{setOpen(false);dispatch({type:Types.authLogout,payload:initialValues})}}>No</Button>
-          <Button onClick={e=>sessionRefresh(true)} autoFocus>
+          <Button onClick={e=>{setOpenMod(true);setOpen(false)}} autoFocus>
             Si
           </Button>
         </DialogActions>
       </Dialog>
-	  <Dialog>
-
+	  <Dialog
+	  open={OpenMod}
+	  onClose={e=>{setOpenMod(false);dispatch({type:Types.authLogout,payload:initialValues})}}
+	  >
+		<DialogTitle></DialogTitle>
+		<DialogContent></DialogContent>
+		<DialogActions></DialogActions>
 	  </Dialog>
 	<Router/>
 	</ThemeProvider>
