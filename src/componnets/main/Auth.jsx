@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { SessionContext } from "../session/SessionContext";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -8,6 +8,24 @@ import { useNavigate } from "react-router-dom";
 import { Avatar } from "@mui/material";
 import { Types } from "../session/SessionReducer";
 import { AUTH } from "../../helpers/Apiinstance";
+import { useContext, useEffect, useState } from "react";
+import Router from "./componnets/router/Router.jsx";
+import { SessionContext } from "./componnets/session/SessionContext.jsx";
+import {
+  Button,
+  createTheme,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  TextField,
+  ThemeProvider,
+} from "@mui/material";
+import { AUTH } from "./helpers/Apiinstance.jsx";
+import { Types } from "./componnets/session/SessionReducer.jsx";
+
+
 
 const Auth = () => {
   const [state,dispatch] = useContext(SessionContext);
@@ -27,6 +45,9 @@ const logout = async()=>{
   dispatch({type: Types.authLogout})
   await AUTH.put(`/logout`,undefined,{withCredentials:true})
 }
+
+
+
 
   return (
       user.token?.length > 1 ? (

@@ -1,7 +1,15 @@
-import React from 'react'
+import axios from "axios"
 
-export const useAxios = () => {
-  return (
-    <div>useAxios</div>
-  )
+const URI = "http://192.168.1.164:3001"
+const apiInstance = axios.create({baseURL: URI
+})
+
+const useAxios = () => {
+  
+    return apiInstance
 }
+
+
+export default useAxios
+
+
