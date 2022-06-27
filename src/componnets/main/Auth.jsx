@@ -7,8 +7,7 @@ import Menu from "@mui/material/Menu";
 import { useNavigate } from "react-router-dom";
 import { Avatar } from "@mui/material";
 import { Types } from "../session/SessionReducer";
-import axios from "axios";
-import { AUTH } from "../../helpers/Const";
+import { AUTH } from "../../helpers/Apiinstance";
 
 const Auth = () => {
   const [state,dispatch] = useContext(SessionContext);
@@ -26,7 +25,7 @@ const Auth = () => {
 
 const logout = async()=>{
   dispatch({type: Types.authLogout})
-  await axios.put(`${AUTH}/logout`,undefined,{withCredentials:true})
+  await AUTH.put(`/logout`,undefined,{withCredentials:true})
 }
 
   return (

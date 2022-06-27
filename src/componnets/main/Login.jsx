@@ -19,8 +19,7 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import CloseIcon from "@mui/icons-material/Close";
 import GppBadIcon from "@mui/icons-material/GppBad";
-import { AUTH } from "../../helpers/Const";
-import axios from "axios";
+import { AUTH } from "../../helpers/Apiinstance";
 
 function Copyright(props) {
   return (
@@ -77,7 +76,7 @@ export default function Login() {
 
   const sendData = async (values) => {
     try {
-      const response = await axios.post(`${AUTH}/login`, values,{withCredentials:true});
+      const response = await AUTH.post(`/login`, values,{withCredentials:true});
       if (response.status === 200) {
         dispatch({ type: Types.authLogin, payload: response.data });
         navigate("/");

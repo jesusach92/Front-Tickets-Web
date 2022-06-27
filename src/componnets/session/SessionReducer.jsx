@@ -1,5 +1,3 @@
-import axios from "axios";
-import { AUTH } from "../../helpers/Const";
 
 const Types = {
   authLogin: "auth - Login",
@@ -18,6 +16,7 @@ const initialValues = {
 const SessionReducer = (state, action) => {
   switch (action.type) {
     case Types.authRefresh:
+      window.localStorage.setItem("session",JSON.stringify(action.payload))
       return {
         ...state,
         user:action.payload
