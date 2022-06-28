@@ -8,6 +8,7 @@ import {
   MenuItem,
   TextField,
   ThemeProvider,
+  Tooltip,
   Typography,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
@@ -51,8 +52,16 @@ const NewTicket = () => {
     event.preventDefault();
     const _formData = new FormData(event.currentTarget);
     setData();
-    console.log(_formData.get("email"));
+  };
 
+  window.onbeforeunload = (event) => {
+    const e = event || window.Event;
+    e.preventDefault();
+    if (e) {
+      e.returnValue = "";
+    }
+    alert("No te vayas");
+    return "";
   };
   return (
     <Box>
@@ -95,7 +104,7 @@ const NewTicket = () => {
                   </Typography>
                 </Grid>
                 <Grid item xl={12} xs={true} sm={12} md={12} lg={12}>
-                  {!user.auth ? (
+                  {!user.token ? (
                     <TextField
                       label="No. de Referencia"
                       required
@@ -134,7 +143,7 @@ const NewTicket = () => {
                   ></TextField>
                   <TextField
                     select
-					name="cetegory"
+                    name="cetegory"
                     size="small"
                     label="Categoria"
                     helperText="Selecciona tu categoria"
@@ -148,10 +157,26 @@ const NewTicket = () => {
                       },
                     }}
                   >
-                    <MenuItem value={10}>Diez</MenuItem>
+                   
+                      <MenuItem value={1}>
+							Redes
+						</MenuItem>
+                    
+                    
+                      <MenuItem value={2}>Wifi</MenuItem>
+                   
+                   
+                      <MenuItem value={3}>Programacion</MenuItem>
+                    
+                   
+                      <MenuItem value={4}>Impresoras</MenuItem>
+                    
+                   
+                      <MenuItem value={5}>Equipos</MenuItem>
+                    
                   </TextField>
                   <TextField
-				  	name="message"
+                    name="message"
                     label="Mensaje"
                     margin="normal"
                     multiline
@@ -168,40 +193,46 @@ const NewTicket = () => {
                     }}
                     placeholder="Describe a detalle tu problema"
                   ></TextField>
+                  {!user.token ? (
+                    <>
+                      <TextField
+                        name="email"
+                        label="Correo Electronico"
+                        margin="normal"
+                        required
+                        placeholder="Asunto"
+                        size="small"
+                        sx={{
+                          [theme.breakpoints.down("lg")]: {
+                            width: "100%",
+                          },
+                          [theme.breakpoints.up("sm")]: {
+                            width: "51%",
+                          },
+                        }}
+                      ></TextField>
+                      <TextField
+                        name="consumerName"
+                        required
+                        label="Nombre Completo"
+                        placeholder="Nombre"
+                        size="small"
+                        margin="normal"
+                        sx={{
+                          [theme.breakpoints.down("lg")]: {
+                            width: "100%",
+                          },
+                          [theme.breakpoints.up("sm")]: {
+                            width: "51%",
+                          },
+                        }}
+                      ></TextField>
+                    </>
+                  ) : (
+                    <></>
+                  )}
                   <TextField
-				  	name="email"
-                    label="Correo Electronico"
-                    margin="normal"
-                    required
-                    placeholder="Asunto"
-                    size="small"
-                    sx={{
-                      [theme.breakpoints.down("lg")]: {
-                        width: "100%",
-                      },
-                      [theme.breakpoints.up("sm")]: {
-                        width: "51%",
-                      },
-                    }}
-                  ></TextField>
-                  <TextField
-				  	name="consumerName"
-                    required
-                    label="Nombre Completo"
-                    placeholder="Nombre"
-                    size="small"
-                    margin="normal"
-                    sx={{
-                      [theme.breakpoints.down("lg")]: {
-                        width: "100%",
-                      },
-                      [theme.breakpoints.up("sm")]: {
-                        width: "51%",
-                      },
-                    }}
-                  ></TextField>
-                  <TextField
-				  	name="files"
+                    name="files"
                     type="file"
                     label="Carga una imagen que nos ayude a identificar tu problema"
                     InputLabelProps={{
@@ -224,7 +255,7 @@ const NewTicket = () => {
                     }}
                   ></TextField>
                   <TextField
-				  	name="priority"
+                    name="priority"
                     select
                     size="small"
                     label="Prioridad"
