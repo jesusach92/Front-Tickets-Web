@@ -25,6 +25,7 @@ const NavBar = () => {
           <Link to="/">
             <img src={logo} alt="Texin" className="logo"></img>
           </Link>
+          
           <Auth></Auth>
         </Toolbar>
       </AppBar>

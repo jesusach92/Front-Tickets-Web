@@ -104,7 +104,7 @@ const NewTicket = () => {
                   </Typography>
                 </Grid>
                 <Grid item xl={12} xs={true} sm={12} md={12} lg={12}>
-                  {!user.token ? (
+                  {user.type && user.type === 1 ? (
                     <TextField
                       label="No. de Referencia"
                       required
@@ -193,7 +193,7 @@ const NewTicket = () => {
                     }}
                     placeholder="Describe a detalle tu problema"
                   ></TextField>
-                  {!user.token ? (
+                  {user.type && user.type === 1  ? (
                     <>
                       <TextField
                         name="email"

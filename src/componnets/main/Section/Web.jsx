@@ -101,7 +101,7 @@ const Web = () => {
                     }}
                     onClick={(e) => navigate("/")}
                   >
-                    Bienvenido{user.nameEmploye ? " " + user.nameEmploye : ""}
+                    Bienvenido{user.nameUser ? " " + user.nameUser : ""}
                   </Button>
                 </ThemeProvider>
               </Box>

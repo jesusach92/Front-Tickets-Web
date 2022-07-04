@@ -10,7 +10,6 @@ const initialValues = {
     token: "",
     userName: "",
     profileImage: "",
-    fkRol: "",
   },
 };
 const SessionReducer = (state, action) => {
