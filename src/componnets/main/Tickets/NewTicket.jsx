@@ -8,7 +8,6 @@ import {
   MenuItem,
   TextField,
   ThemeProvider,
-  Tooltip,
   Typography,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
@@ -104,7 +103,7 @@ const NewTicket = () => {
                   </Typography>
                 </Grid>
                 <Grid item xl={12} xs={true} sm={12} md={12} lg={12}>
-                  {user.type && user.type === 1 ? (
+                  {!user.type || user.type === 1 ? (
                     <TextField
                       label="No. de Referencia"
                       required
@@ -157,23 +156,15 @@ const NewTicket = () => {
                       },
                     }}
                   >
-                   
-                      <MenuItem value={1}>
-							Redes
-						</MenuItem>
-                    
-                    
-                      <MenuItem value={2}>Wifi</MenuItem>
-                   
-                   
-                      <MenuItem value={3}>Programacion</MenuItem>
-                    
-                   
-                      <MenuItem value={4}>Impresoras</MenuItem>
-                    
-                   
-                      <MenuItem value={5}>Equipos</MenuItem>
-                    
+                    <MenuItem value={1}>Redes</MenuItem>
+
+                    <MenuItem value={2}>Wifi</MenuItem>
+
+                    <MenuItem value={3}>Programacion</MenuItem>
+
+                    <MenuItem value={4}>Impresoras</MenuItem>
+
+                    <MenuItem value={5}>Equipos</MenuItem>
                   </TextField>
                   <TextField
                     name="message"
@@ -193,7 +184,7 @@ const NewTicket = () => {
                     }}
                     placeholder="Describe a detalle tu problema"
                   ></TextField>
-                  {user.type && user.type === 1  ? (
+                  {!user.type || user.type === 1 ? (
                     <>
                       <TextField
                         name="email"

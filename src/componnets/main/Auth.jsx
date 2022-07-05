@@ -5,7 +5,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import { useNavigate } from "react-router-dom";
-import { Avatar } from "@mui/material";
+import { Avatar, useMediaQuery } from "@mui/material";
 import { Types } from "../session/SessionReducer";
 import { AUTH } from "../../helpers/Apiinstance";
 import {
@@ -32,6 +32,7 @@ const theme = createTheme({
 });
 
 const Auth = () => {
+  const display = useMediaQuery(theme.breakpoints.between("sm","lg"))
   const [, dispatch] = useContext(SessionContext);
   const user = JSON.parse(localStorage.getItem("session")) || "";
   const [open, setOpen] = useState(false);
@@ -57,7 +58,6 @@ const Auth = () => {
       const { data } = await AUTH.get(`/update`, {
         withCredentials: true,
       });
-      console.log(data);
       dispatch({ type: Types.authRefresh, payload: data });
     } catch (error) {
       console.log(error);
@@ -82,7 +82,7 @@ const Auth = () => {
     if (user.token) {
       sessionConsult();
     }
-  }, []);
+  },[]);
 
   return user.token?.length > 1 ? (
     <ThemeProvider theme={theme}>
@@ -161,6 +161,7 @@ const Auth = () => {
         color="inherit"
       >
         <Avatar src="logo"></Avatar>
+        {!display?(`  ${user.nameUser}`):(<></>)}
       </IconButton>
       <Menu
         id="menu-appbar"
