@@ -8,7 +8,7 @@ const Types = {
 const initialValues = {
   user: {
     token: "",
-    userName: "",
+    nameUser: "",
     profileImage: "",
   },
 };

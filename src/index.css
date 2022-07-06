@@ -41,3 +41,7 @@ body {
   margin: 10px 20px 5px 30px;
   width: 100px;
 }
+
+input::-ms-reveal {
+    display: none;
+}

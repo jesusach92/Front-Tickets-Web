@@ -5,7 +5,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import { useNavigate } from "react-router-dom";
-import { Avatar, useMediaQuery } from "@mui/material";
+import { Avatar, Box, Typography, useMediaQuery } from "@mui/material";
 import { Types } from "../session/SessionReducer";
 import { AUTH } from "../../helpers/Apiinstance";
 import {
@@ -32,7 +32,7 @@ const theme = createTheme({
 });
 
 const Auth = () => {
-  const display = useMediaQuery(theme.breakpoints.between("sm","lg"))
+  const display = useMediaQuery(theme.breakpoints.between("xs","md"))
   const [, dispatch] = useContext(SessionContext);
   const user = JSON.parse(localStorage.getItem("session")) || "";
   const [open, setOpen] = useState(false);
@@ -142,6 +142,7 @@ const Auth = () => {
             fullWidth
             size="small"
             type={"password"}
+            autoFocus
             value={dataU.password}
             onChange={(e) =>
               setData({ ...dataU, password: e.target.value })
@@ -161,7 +162,7 @@ const Auth = () => {
         color="inherit"
       >
         <Avatar src="logo"></Avatar>
-        {!display?(`  ${user.nameUser}`):(<></>)}
+        {!display?(<Typography component={"div"} marginX={2}><Box>{user.nameUser}</Box></Typography>):(<></>)}
       </IconButton>
       <Menu
         id="menu-appbar"
@@ -179,6 +180,7 @@ const Auth = () => {
         onClose={handleClose}
       >
         <MenuItem onClick={(e) => navigate("/")}>Inicio</MenuItem>
+        {user.fkRole !== 1 && user.fkRole !== undefined ?(<MenuItem onClick={e=>navigate("/Dashboard")}>Administración</MenuItem>):(<></>)}
         <MenuItem onClick={(e) => navigate("/Profile")}>Perfil</MenuItem>
         <MenuItem onClick={(e) => navigate("/NewTicket")}>
           Nuevo Ticket
