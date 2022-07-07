@@ -1,20 +1,18 @@
 import React from "react";
 import {
-  Box,
   createTheme,
   Grid,
-  IconButton,
-  Paper,
   Stack,
   ThemeProvider,
-  useMediaQuery,
+  Tooltip,
+
 } from "@mui/material";
 import InboxIcon from "@mui/icons-material/Inbox";
 import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
 import QueryStatsIcon from "@mui/icons-material/QueryStats";
 import SettingsIcon from "@mui/icons-material/Settings";
 import { grey } from "@mui/material/colors";
-import { useNavigate } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 const theme = createTheme({
   palette: {
@@ -24,39 +22,48 @@ const theme = createTheme({
   },
 });
 
+const activeStyle = {
+    color:"#fa5d02",
+    textDecoration:"underline",
+}
+
 const SideBar = () => {
-  const navigate =useNavigate()
 	return (
   <ThemeProvider theme={theme}>
 	<Stack
 	  direction={{sm:"column"}}
 	  alignItems="center"
 	  justifyContent={"space-between"}
-	  sx={{ [theme.breakpoints.down("lg")]:{height:"auto"}, height: "100vh", backgroundColor: "rgba(1,1,1,0.9)" }}
+	  sx={{ [theme.breakpoints.down("lg")]:{height:"auto"}, height: "100vh", backgroundColor: "rgba(1,1,1,0.9)",}}
 	>
-	  
-		  <Grid container justifyContent={"center"} py={7}>
+		  <Grid container justifyContent={"center"} textAlign="center" py={7} direction={{xl:"column"}}>
 			<Grid item py={2}>
-			  <IconButton onClick={e=>navigate("Inbox")} color="info">
-				<InboxIcon></InboxIcon>
-			  </IconButton>
+                <Tooltip title="Bandeja de Entrada"  enterDelay={1000} leaveDelay={200}>
+			  <NavLink to="/Dashboard/Inbox" style={({isActive})=>isActive ? activeStyle : {color:"#f5f5f5"}}>
+                <InboxIcon></InboxIcon>
+			  </NavLink></Tooltip>
 			</Grid>
 			<Grid item py={2}>
-			  <IconButton color="info">
-				<PeopleAltIcon></PeopleAltIcon>
-			  </IconButton>
+			  <NavLink to="/Dashboard/Users" style={({isActive})=>isActive ? activeStyle : {color:"#f5f5f5"}}>
+				<Tooltip title="Usuarios" enterDelay={1000} leaveDelay={200}>
+                <PeopleAltIcon ></PeopleAltIcon>
+                </Tooltip>
+              </NavLink>
 			</Grid>
 			<Grid item py={2}>
-			  <IconButton color="info">
-				<QueryStatsIcon></QueryStatsIcon>
-			  </IconButton>
+			  <NavLink to="/Dashboard/Stats"  style={({isActive})=>isActive ? activeStyle : {color:"#f5f5f5"}}>
+				<Tooltip title="Estadisticas"  enterDelay={1000} leaveDelay={200}>
+                <QueryStatsIcon ></QueryStatsIcon>
+                </Tooltip>
+			  </NavLink>
 			</Grid>
 		  </Grid>
 		  <Grid container justifyContent={"center"} py={3}>
 			<Grid item>
-			  <IconButton color="info">
-				<SettingsIcon></SettingsIcon>
-			  </IconButton>
+			  <NavLink to="/Dashboard/Config"  style={({isActive})=>isActive ? activeStyle : {color:"#f5f5f5"}}>
+				<Tooltip title="Configuracion"  enterDelay={1000} leaveDelay={200}>
+                <SettingsIcon fontSize="large"></SettingsIcon></Tooltip>
+			  </NavLink>
 			</Grid>
 		  </Grid>
 	</Stack>

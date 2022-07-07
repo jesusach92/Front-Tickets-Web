@@ -12,6 +12,8 @@ const darkTheme = createTheme({
   },
 });
 
+
+
 const NavBar = () => {
   return (
     <ThemeProvider theme={darkTheme}>
