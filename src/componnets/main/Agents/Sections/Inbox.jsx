@@ -1,36 +1,35 @@
-import { Box, createTheme, Divider, Grid, Tab, Tabs, ThemeProvider } from "@mui/material";
+import { Box, createTheme, Divider, Grid, Tab, Tabs, ThemeProvider, Typography } from "@mui/material";
 import React, { useState } from "react";
 import NavBar from "../NavBar";
 import SideBar from "../SideBar";
 import InboxIcon from "@mui/icons-material/Inbox";
+import Loading from "../../../../helpers/Loading";
+const RequestTicket = React.lazy(()=>import("./Tickets/RequestTicket"))
+const TableTicket = React.lazy(()=>import("./Tickets/TableTicket"))
 
-const TabPanel =(props)=>{
-    const { value, index, ...other } = props;
+const TabPanel =({component})=>{
     return(
         <Box sx={{height:"100%"}}>
             <Grid container direction={"column"} sx={{height:"100%"}}>
-                <Grid item>Hola</Grid>
+                <Grid item>
+                    <Typography variant="h6" align="left" p={2}> 
+                            {component.label}
+                    </Typography> 
+                </Grid>
                 <Grid item flexGrow={1}>
-                        Hola 2
+                   {component.value === 4 ?(<React.Suspense fallback={<Loading></Loading>}><RequestTicket></RequestTicket></React.Suspense>):(<React.Suspense fallback={<Loading></Loading>}><TableTicket></TableTicket></React.Suspense>)}
                 </Grid>
             </Grid>
         </Box>
         
     )
 }
-function a11yProps(index) {
-    return {
-      id: `simple-tab-${index}`,
-      'aria-controls': `simple-tabpanel-${index}`,
-    };
-  }
+
   
 
 const Inbox = () => {
-const [component, setComponent] = useState("index")
-const handleChange = (event, newValue) => {
-    setComponent(newValue);
-  };
+const [component, setComponent] = useState({value:0, label:"Bandeja de Entrada"})
+
 
   const theme = createTheme({
     palette: {
@@ -65,20 +64,20 @@ const handleChange = (event, newValue) => {
                   }}
                 >
                   <Tabs orientation="vertical"
-                  value={component}
-                  onChange={handleChange}
+                  value={component.value}
+                  onChange={(e,newValue)=>{setComponent({value:newValue, label:e.target.ariaLabel})}}
                   >
-                    <Tab icon={<InboxIcon />} label="Bandeja de Entrada" sx={{paddingTop:4}}></Tab>
+                    <Tab icon={<InboxIcon />} label="Bandeja de Entrada" aria-label="Bandeja de Entrada" sx={{paddingTop:4}} tabIndex={0}></Tab>
                     <Divider></Divider>
-                    <Tab label="Tickets Abiertos" ></Tab>
-                    <Tab label="Tickets Cerrados" ></Tab>
-                    <Tab label="Recientes Actualizaciones" ></Tab>
+                    <Tab  label="Tickets Abiertos" aria-label="Tickets Abiertos" tabIndex={1}></Tab>
+                    <Tab label="Tickets Cerrados"  tabIndex={2} aria-label="Tickets Cerrados"></Tab>
+                    <Tab label="Recientes Actualizaciones" tabIndex={3} aria-label="Recientes Actualizaciones"></Tab>
                     <Divider></Divider>
-                    <Tab label="Solicitudes de Reapertura" ></Tab>
+                    <Tab label="Solicitudes de Reapertura"  tabIndex={4} aria-label="Solicitud de Reapertura"></Tab>
                   </Tabs>
                 </Grid>
                 <Grid item xl={21} sx={{height:"100%"}}>
-                    <TabPanel></TabPanel>
+                    <TabPanel component={component}></TabPanel>
                 </Grid>
               </Grid>
             </Grid>

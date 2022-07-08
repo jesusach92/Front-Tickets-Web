@@ -220,7 +220,7 @@ const EnhancedTableToolbar = (props) => {
 
 
 
-export default function Recently() {
+export default function Recently(props) {
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('calories');
   const [selected, setSelected] = React.useState([]);
