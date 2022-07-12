@@ -31,16 +31,18 @@ const SideBar = () => {
   return (
     <ThemeProvider theme={theme}>
       <Box
-      position={"fixed"}
+      
         sx={{
           [theme.breakpoints.down("lg")]: { height: "auto" },
           height: "100%",
           minHeight: "100vh",
           backgroundColor: "rgba(1,1,1,0.9)",
-          
+          margin:"auto"
         }}
       >
         <Grid
+        position={"sticky"}
+        top="0"
           container
           direction={{ sm: "column" }}
           alignItems="center"

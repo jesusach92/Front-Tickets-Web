@@ -1,51 +1,74 @@
-import * as React from 'react';
-import PropTypes from 'prop-types';
-import { alpha } from '@mui/material/styles';
-import Box from '@mui/material/Box';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TablePagination from '@mui/material/TablePagination';
-import TableRow from '@mui/material/TableRow';
-import TableSortLabel from '@mui/material/TableSortLabel';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import Paper from '@mui/material/Paper';
-import Checkbox from '@mui/material/Checkbox';
-import IconButton from '@mui/material/IconButton';
-import Tooltip from '@mui/material/Tooltip';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Switch from '@mui/material/Switch';
-import DeleteIcon from '@mui/icons-material/Delete';
-import FilterListIcon from '@mui/icons-material/FilterList';
-import { visuallyHidden } from '@mui/utils';
+import * as React from "react";
+import { alpha } from "@mui/material/styles";
+import Box from "@mui/material/Box";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TablePagination from "@mui/material/TablePagination";
+import TableRow from "@mui/material/TableRow";
+import TableSortLabel from "@mui/material/TableSortLabel";
+import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
+import Paper from "@mui/material/Paper";
+import Checkbox from "@mui/material/Checkbox";
+import IconButton from "@mui/material/IconButton";
+import Tooltip from "@mui/material/Tooltip";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Switch from "@mui/material/Switch";
+import DeleteIcon from "@mui/icons-material/Delete";
+import FilterListIcon from "@mui/icons-material/FilterList";
+import SearchIcon from "@mui/icons-material/Search";
+import { visuallyHidden } from "@mui/utils";
+import { InputBase } from "@mui/material";
 
-function createData(name, calories, fat, carbs, protein) {
+function createData(
+  ID,
+  subject,
+  category,
+  fkUser,
+  dateInitial,
+  status,
+  dateUpdate,
+  priority,
+  dateClose,
+  timeSolution
+) 
+{
   return {
-    name,
-    calories,
-    fat,
-    carbs,
-    protein,
+    ID,
+    subject,
+    category,
+    fkUser,
+    dateInitial,
+    status,
+    dateUpdate,
+    priority,
+    dateClose,
+    timeSolution,
   };
 }
 
 const rows = [
-  createData('Cupcake', 305, 3.7, 67, 4.3),
-  createData('Donut', 452, 25.0, 51, 4.9),
-  createData('Eclair', 262, 16.0, 24, 6.0),
-  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
-  createData('Honeycomb', 408, 3.2, 87, 6.5),
-  createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-  createData('Jelly Bean', 375, 0.0, 94, 0.0),
-  createData('KitKat', 518, 26.0, 65, 7.0),
-  createData('Lollipop', 392, 0.2, 98, 0.0),
-  createData('Marshmallow', 318, 0, 81, 2.0),
-  createData('Nougat', 360, 19.0, 9, 37.0),
-  createData('Oreo', 437, 18.0, 63, 4.0),
+  createData(1,"Problemas de Conexion","Wifi",1,"2022,06,11","Abierto","2022,07,12","Baja","2022,07,12","1 Mes 6 Hrs"),
+  createData(2,"Problemas con la impresora","Impresora",2,"2022,07,08","Cerrado","2022,07,11","Baja","2022,07,11","2 días con 3 hrs"),
+  createData(3,"SAP","Impresora",2,"2022,07,08","Cerrado","2022,07,11","Baja","2022,07,11","2 días con 3 hrs"),
+  createData(4,"RED","Impresora",2,"2022,07,08","Cerrado","2022,07,11","Baja","2022,07,11","2 días con 3 hrs"),
+  createData(5,"Excel","Impresora",2,"2022,07,08","Cerrado","2022,07,11","Baja","2022,07,11","2 días con 3 hrs"),
+  createData(6,"WORD","Impresora",2,"2022,07,08","Cerrado","2022,07,11","Baja","2022,07,11","2 días con 3 hrs"),
+  createData(7,"Wifi","Impresora",2,"2022,07,08","Cerrado","2022,07,11","Baja","2022,07,11","2 días con 3 hrs"),
+  createData(8,"Corte","Impresora",2,"2022,07,08","Cerrado","2022,07,11","Baja","2022,07,11","2 días con 3 hrs"),
+  createData(9,"Red","Impresora",2,"2022,07,08","Cerrado","2022,07,11","Baja","2022,07,11","2 días con 3 hrs"),
+  createData(10,"Excel","Impresora",2,"2022,07,08","Cerrado","2022,07,11","Baja","2022,07,11","2 días con 3 hrs"),
+  createData(11,"Problemas con la impresora","Impresora",2,"2022,07,08","Cerrado","2022,07,11","Baja","2022,07,11","2 días con 3 hrs"),
+  createData(12,"Problemas con la impresora","Impresora",2,"2022,07,08","Cerrado","2022,07,11","Baja","2022,07,11","2 días con 3 hrs"),
+  createData(13,"Problemas con la impresora","Impresora",2,"2022,07,08","Cerrado","2022,07,11","Baja","2022,07,11","2 días con 3 hrs"),
+  createData(14,"Problemas con la impresora","Impresora",2,"2022,07,08","Cerrado","2022,07,11","Baja","2022,07,11","2 días con 3 hrs"),
+  createData(15,"Problemas con la impresora","Impresora",2,"2022,07,08","Cerrado","2022,07,11","Baja","2022,07,11","2 días con 3 hrs"),
+  createData(16,"Problemas con la impresora","Impresora",2,"2022,07,08","Cerrado","2022,07,11","Baja","2022,07,11","2 días con 3 hrs"),
+  createData(17,"Problemas con la impresora","Impresora",2,"2022,07,08","Cerrado","2022,07,11","Baja","2022,07,11","2 días con 3 hrs"),
+    
 ];
 
 function descendingComparator(a, b, orderBy) {
@@ -59,7 +82,7 @@ function descendingComparator(a, b, orderBy) {
 }
 
 function getComparator(order, orderBy) {
-  return order === 'desc'
+  return order === "desc"
     ? (a, b) => descendingComparator(a, b, orderBy)
     : (a, b) => -descendingComparator(a, b, orderBy);
 }
@@ -80,40 +103,76 @@ function stableSort(array, comparator) {
 
 const headCells = [
   {
-    id: 'name',
+    id: "ID",
     numeric: false,
     disablePadding: true,
-    label: 'Dessert (100g serving)',
+    label: "ID",
   },
   {
-    id: 'calories',
+    id: "subject",
     numeric: true,
     disablePadding: false,
-    label: 'Calories',
+    label: "Asunto",
   },
   {
-    id: 'fat',
+    id: "category",
     numeric: true,
     disablePadding: false,
-    label: 'Fat (g)',
+    label: "Categoria",
   },
   {
-    id: 'carbs',
+    id: "fkUser",
     numeric: true,
     disablePadding: false,
-    label: 'Carbs (g)',
+    label: "Solicitante",
   },
   {
-    id: 'protein',
+    id: "dateInitial",
     numeric: true,
     disablePadding: false,
-    label: 'Protein (g)',
+    label: "Fecha de Solicitud",
+  },
+  {
+    id: "status",
+    numeric: true,
+    disablePadding: false,
+    label: "Estatus",
+  },
+  {
+    id: "dateUpdate",
+    numeric: true,
+    disablePadding: false,
+    label: "Ultima Actulización",
+  },
+  {
+    id: "priority",
+    numeric: true,
+    disablePadding: false,
+    label: "Prioridad",
+  },
+  {
+    id: "dateClose",
+    numeric: true,
+    disablePadding: false,
+    label: "Fecha de Cierre",
+  },
+  {
+    id: "timeSolution",
+    numeric: true,
+    disablePadding: false,
+    label: "Tiempo de solución",
   },
 ];
 
 function EnhancedTableHead(props) {
-  const { onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } =
-    props;
+  const {
+    onSelectAllClick,
+    order,
+    orderBy,
+    numSelected,
+    rowCount,
+    onRequestSort,
+  } = props;
   const createSortHandler = (property) => (event) => {
     onRequestSort(event, property);
   };
@@ -128,26 +187,26 @@ function EnhancedTableHead(props) {
             checked={rowCount > 0 && numSelected === rowCount}
             onChange={onSelectAllClick}
             inputProps={{
-              'aria-label': 'select all desserts',
+              "aria-label": "select all desserts",
             }}
           />
         </TableCell>
         {headCells.map((headCell) => (
           <TableCell
             key={headCell.id}
-            align={headCell.numeric ? 'right' : 'left'}
-            padding={headCell.disablePadding ? 'none' : 'normal'}
+            align={headCell.numeric ? "right" : "left"}
+            padding={headCell.disablePadding ? "none" : "normal"}
             sortDirection={orderBy === headCell.id ? order : false}
           >
             <TableSortLabel
               active={orderBy === headCell.id}
-              direction={orderBy === headCell.id ? order : 'asc'}
+              direction={orderBy === headCell.id ? order : "asc"}
               onClick={createSortHandler(headCell.id)}
             >
               {headCell.label}
               {orderBy === headCell.id ? (
                 <Box component="span" sx={visuallyHidden}>
-                  {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
+                  {order === "desc" ? "sorted descending" : "sorted ascending"}
                 </Box>
               ) : null}
             </TableSortLabel>
@@ -157,15 +216,6 @@ function EnhancedTableHead(props) {
     </TableHead>
   );
 }
-
-EnhancedTableHead.propTypes = {
-  numSelected: PropTypes.number.isRequired,
-  onRequestSort: PropTypes.func.isRequired,
-  onSelectAllClick: PropTypes.func.isRequired,
-  order: PropTypes.oneOf(['asc', 'desc']).isRequired,
-  orderBy: PropTypes.string.isRequired,
-  rowCount: PropTypes.number.isRequired,
-};
 
 const EnhancedTableToolbar = (props) => {
   const { numSelected } = props;
@@ -177,78 +227,78 @@ const EnhancedTableToolbar = (props) => {
         pr: { xs: 1, sm: 1 },
         ...(numSelected > 0 && {
           bgcolor: (theme) =>
-            alpha(theme.palette.primary.main, theme.palette.action.activatedOpacity),
+            alpha(
+              theme.palette.primary.main,
+              theme.palette.action.activatedOpacity
+            ),
         }),
       }}
     >
       {numSelected > 0 ? (
         <Typography
-          sx={{ flex: '1 1 100%' }}
+          sx={{ flex: "1 1 100%" }}
           color="inherit"
           variant="subtitle1"
           component="div"
         >
-          {numSelected} selected
+          {numSelected} Seleccionados
         </Typography>
       ) : (
-        <Typography
-          sx={{ flex: '1 1 100%' }}
-          variant="h6"
-          id="tableTitle"
-          component="div"
-        >
-          Nutrition
-        </Typography>
+        <Paper square sx={{ display: "flex" }}>
+              <InputBase
+              size="small"
+                sx={{ ml: 1, flex: "1" }}
+                placeholder="Necesito..."
+                inputProps={{ "aria-label": "¿Como puedo ayudarte?" }}
+              />
+              <IconButton type="submit" sx={{ p: "10px" }} aria-label="search">
+                <SearchIcon />
+              </IconButton>
+            </Paper>
       )}
 
       {numSelected > 0 ? (
         <Tooltip title="Delete">
-          <IconButton>
+          <IconButton onClick={(e) => alert("Borrado")}>
             <DeleteIcon />
           </IconButton>
         </Tooltip>
       ) : (
-        <Tooltip title="Filter list">
-          <IconButton>
-            <FilterListIcon />
-          </IconButton>
-        </Tooltip>
+        <></>
       )}
     </Toolbar>
   );
 };
 
-
-
-export default function RequestTicket() {
-  const [order, setOrder] = React.useState('asc');
-  const [orderBy, setOrderBy] = React.useState('calories');
+export default function RequestTicket(props) {
+  const [order, setOrder] = React.useState("asc");
+  const [orderBy, setOrderBy] = React.useState("ID");
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
   const handleRequestSort = (event, property) => {
-    const isAsc = orderBy === property && order === 'asc';
-    setOrder(isAsc ? 'desc' : 'asc');
+    const isAsc = orderBy === property && order === "asc";
+    setOrder(isAsc ? "desc" : "asc");
     setOrderBy(property);
   };
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelecteds = rows.map((n) => n.name);
+      const newSelecteds = rows.map((n) => n.ID);
       setSelected(newSelecteds);
       return;
     }
     setSelected([]);
   };
 
-  const handleClick = (event, name) => {
-    const selectedIndex = selected.indexOf(name);
+  const handleClick = (event, ID) => {
+    const selectedIndex = selected.indexOf(ID);
     let newSelected = [];
 
     if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, name);
+      newSelected = newSelected.concat(selected, ID);
     } else if (selectedIndex === 0) {
       newSelected = newSelected.concat(selected.slice(1));
     } else if (selectedIndex === selected.length - 1) {
@@ -256,7 +306,7 @@ export default function RequestTicket() {
     } else if (selectedIndex > 0) {
       newSelected = newSelected.concat(
         selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1),
+        selected.slice(selectedIndex + 1)
       );
     }
 
@@ -276,21 +326,21 @@ export default function RequestTicket() {
     setDense(event.target.checked);
   };
 
-  const isSelected = (name) => selected.indexOf(name) !== -1;
+  const isSelected = (ID) => selected.indexOf(ID) !== -1;
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
   return (
-    <Box sx={{ width: '100%' }}>
-      <Paper sx={{ width: '100%', mb: 2 }}>
+    <Box sx={{ width: "100%" }}>
+      <Paper sx={{ width: "100%", mb: 2 }}>
         <EnhancedTableToolbar numSelected={selected.length} />
         <TableContainer>
           <Table
             sx={{ minWidth: 750 }}
             aria-labelledby="tableTitle"
-            size={dense ? 'small' : 'medium'}
+            size={dense ? "small" : "medium"}
           >
             <EnhancedTableHead
               numSelected={selected.length}
@@ -306,17 +356,17 @@ export default function RequestTicket() {
               {stableSort(rows, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
-                  const isItemSelected = isSelected(row.name);
+                  const isItemSelected = isSelected(row.ID);
                   const labelId = `enhanced-table-checkbox-${index}`;
 
                   return (
                     <TableRow
                       hover
-                      onClick={(event) => handleClick(event, row.name)}
+                      onClick={(event) => handleClick(event, row.ID)}
                       role="checkbox"
                       aria-checked={isItemSelected}
                       tabIndex={-1}
-                      key={row.name}
+                      key={row.ID}
                       selected={isItemSelected}
                     >
                       <TableCell padding="checkbox">
@@ -324,7 +374,7 @@ export default function RequestTicket() {
                           color="primary"
                           checked={isItemSelected}
                           inputProps={{
-                            'aria-labelledby': labelId,
+                            "aria-labelledby": labelId,
                           }}
                         />
                       </TableCell>
@@ -334,12 +384,17 @@ export default function RequestTicket() {
                         scope="row"
                         padding="none"
                       >
-                        {row.name}
+                        {row.ID}
                       </TableCell>
-                      <TableCell align="right">{row.calories}</TableCell>
-                      <TableCell align="right">{row.fat}</TableCell>
-                      <TableCell align="right">{row.carbs}</TableCell>
-                      <TableCell align="right">{row.protein}</TableCell>
+                      <TableCell align="right">{row.subject}</TableCell>
+                      <TableCell align="right">{row.category}</TableCell>
+                      <TableCell align="right">{row.fkUser}</TableCell>
+                      <TableCell align="right">{row.dateInitial}</TableCell>
+                      <TableCell align="right">{row.status}</TableCell>
+                      <TableCell align="right">{row.dateUpdate}</TableCell>
+                      <TableCell align="right">{row.priority}</TableCell>
+                      <TableCell align="right">{row.dateClose}</TableCell>
+                      <TableCell align="right">{row.timeSolution}</TableCell>
                     </TableRow>
                   );
                 })}
@@ -367,7 +422,7 @@ export default function RequestTicket() {
       </Paper>
       <FormControlLabel
         control={<Switch checked={dense} onChange={handleChangeDense} />}
-        label="Dense padding"
+        label="Contraer"
       />
     </Box>
   );

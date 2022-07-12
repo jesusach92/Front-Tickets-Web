@@ -29,11 +29,16 @@ const theme = createTheme({
 const NavBar = () => {
     const [{user},] = useContext(SessionContext)
   return (
-    user.fkRole !== 1 && user.fkRole !== undefined ? (<Box sx={{ flexGrow: 1 }}>
+    user.fkRole !== 1 && user.fkRole !== undefined ? (<Box  
+     sx={{ flexGrow: 1 }}>
       <ThemeProvider theme={theme}>
-        <AppBar position="static" sx={{ justifyContent: "space-between" }}>
+        <AppBar 
+        position={"sticky"}
+        top="0" 
+        sx={{ justifyContent: "space-between" }}>
           <Toolbar>
-            <Box sx={{ flexGrow: 1 }}>
+            <Box 
+            sx={{ flexGrow: 1 }}>
               <Button
                 size="small"
                 color="success"

@@ -17,7 +17,7 @@ const TabPanel =({component})=>{
                     </Typography> 
                 </Grid>
                 <Grid item flexGrow={1}>
-                   {component.value === 4 ?(<React.Suspense fallback={<Loading></Loading>}><RequestTicket></RequestTicket></React.Suspense>):(<React.Suspense fallback={<Loading></Loading>}><TableTicket></TableTicket></React.Suspense>)}
+                   {component.index === 4 ?(<React.Suspense fallback={<Loading></Loading>}><RequestTicket></RequestTicket></React.Suspense>):(<React.Suspense fallback={<Loading></Loading>}><TableTicket></TableTicket></React.Suspense>)}
                 </Grid>
             </Grid>
         </Box>
@@ -28,7 +28,7 @@ const TabPanel =({component})=>{
   
 
 const Inbox = () => {
-const [component, setComponent] = useState({value:0, label:"Bandeja de Entrada"})
+const [component, setComponent] = useState({value:0, index:0, label:"Bandeja de Entrada"})
 
 
   const theme = createTheme({
@@ -65,7 +65,7 @@ const [component, setComponent] = useState({value:0, label:"Bandeja de Entrada"}
                 >
                   <Tabs orientation="vertical"
                   value={component.value}
-                  onChange={(e,newValue)=>{setComponent({value:newValue, label:e.target.ariaLabel})}}
+                  onChange={(e,newValue)=>{setComponent({value:newValue, index: e.target.tabIndex, label:e.target.ariaLabel})}}
                   >
                     <Tab icon={<InboxIcon />} label="Bandeja de Entrada" aria-label="Bandeja de Entrada" sx={{paddingTop:4}} tabIndex={0}></Tab>
                     <Divider></Divider>
