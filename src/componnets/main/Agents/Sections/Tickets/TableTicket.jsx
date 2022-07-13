@@ -1,4 +1,3 @@
-import * as React from "react";
 import { alpha } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Table from "@mui/material/Table";
@@ -20,6 +19,9 @@ import Switch from "@mui/material/Switch";
 import DeleteIcon from "@mui/icons-material/Delete";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import { visuallyHidden } from "@mui/utils";
+import { InputBase } from "@mui/material";
+import SearchIcon from "@mui/icons-material/Search";
+import { useState } from "react";
 
 function createData(
   ID,
@@ -48,27 +50,60 @@ function createData(
   };
 }
 
-const rows = [
-  createData(1,"Problemas de Conexion","Wifi",1,"2022,06,11","Abierto","2022,07,12","Baja","2022,07,12","1 Mes 6 Hrs"),
-  createData(2,"Problemas con la impresora","Impresora",2,"2022,07,08","Cerrado","2022,07,11","Baja","2022,07,11","2 días con 3 hrs"),
-  createData(3,"SAP","Impresora",2,"2022,07,08","Cerrado","2022,07,11","Baja","2022,07,11","2 días con 3 hrs"),
-  createData(4,"RED","Impresora",2,"2022,07,08","Cerrado","2022,07,11","Baja","2022,07,11","2 días con 3 hrs"),
-  createData(5,"Excel","Impresora",2,"2022,07,08","Cerrado","2022,07,11","Baja","2022,07,11","2 días con 3 hrs"),
-  createData(6,"WORD","Impresora",2,"2022,07,08","Cerrado","2022,07,11","Baja","2022,07,11","2 días con 3 hrs"),
-  createData(7,"Wifi","Impresora",2,"2022,07,08","Cerrado","2022,07,11","Baja","2022,07,11","2 días con 3 hrs"),
-  createData(8,"Corte","Impresora",2,"2022,07,08","Cerrado","2022,07,11","Baja","2022,07,11","2 días con 3 hrs"),
-  createData(9,"Red","Impresora",2,"2022,07,08","Cerrado","2022,07,11","Baja","2022,07,11","2 días con 3 hrs"),
-  createData(10,"Excel","Impresora",2,"2022,07,08","Cerrado","2022,07,11","Baja","2022,07,11","2 días con 3 hrs"),
-  createData(11,"Problemas con la impresora","Impresora",2,"2022,07,08","Cerrado","2022,07,11","Baja","2022,07,11","2 días con 3 hrs"),
-  createData(12,"Problemas con la impresora","Impresora",2,"2022,07,08","Cerrado","2022,07,11","Baja","2022,07,11","2 días con 3 hrs"),
-  createData(13,"Problemas con la impresora","Impresora",2,"2022,07,08","Cerrado","2022,07,11","Baja","2022,07,11","2 días con 3 hrs"),
-  createData(14,"Problemas con la impresora","Impresora",2,"2022,07,08","Cerrado","2022,07,11","Baja","2022,07,11","2 días con 3 hrs"),
-  createData(15,"Problemas con la impresora","Impresora",2,"2022,07,08","Cerrado","2022,07,11","Baja","2022,07,11","2 días con 3 hrs"),
-  createData(16,"Problemas con la impresora","Impresora",2,"2022,07,08","Cerrado","2022,07,11","Baja","2022,07,11","2 días con 3 hrs"),
-  createData(17,"Problemas con la impresora","Impresora",2,"2022,07,08","Cerrado","2022,07,11","Baja","2022,07,11","2 días con 3 hrs"),
+
+
+let rows = [
+  createData(1,"Problemas de Conexion","Wifi",1,"2022-06-11","Abierto","2022-07-12","Alta","2022-07-12","1 Mes 6 Hrs"),
+  createData(2,"Problemas con la impresora","Impresora",2,"2022-07-08","Cerrado","2022-07-11","Media","2022-07-11","2 días con 3 hrs"),
+  createData(3,"SAP","Impresora",2,"2022-07-08","Cerrado","2022-07-11","Baja","2022-07-11","2 días con 3 hrs"),
+  createData(4,"RED","Impresora",2,"2022-07-08","Cerrado","2022-07-11","Alta","2022-07-11","2 días con 3 hrs"),
+  createData(5,"Excel","Impresora",2,"2022-07-08","Cerrado","2022-07-11","Alta","2022-07-11","2 días con 3 hrs"),
+  createData(6,"WORD","Impresora",2,"2022-07-08","Cerrado","2022-07-11","Alta","2022-07-11","2 días con 3 hrs"),
+  createData(7,"Wifi","Impresora",2,"2022-07-08","Cerrado","2022-07-11","Alta","2022-07-11","2 días con 3 hrs"),
+  createData(8,"Corte","Impresora",2,"2022-07-08","Cerrado","2022-07-11","Media","2022-07-11","2 días con 3 hrs"),
+  createData(9,"Red","Impresora",2,"2022-07-08","Cerrado","2022-07-11","Media","2022-07-11","2 días con 3 hrs"),
+  createData(10,"Excel","Impresora",2,"2022-07-08","Cerrado","2022-07-11","Baja","2022-07-11","2 días con 3 hrs"),
+  createData(11,"Problemas con la impresora","Impresora",2,"2022-07-08","Cerrado","2022-07-11","Baja","2022-07-11","2 días con 3 hrs"),
+  createData(12,"Problemas con la impresora","Impresora",2,"2022-07-08","Cerrado","2022-07-11","Baja","2022-07-11","2 días con 3 hrs"),
+  createData(13,"Problemas con la impresora","Impresora",2,"2022-07-08","Cerrado","2022-07-11","Baja","2022-07-11","2 días con 3 hrs"),
+  createData(14,"Problemas con la impresora","Impresora",2,"2022-07-08","Cerrado","2022-07-11","Baja","2022-07-11","2 días con 3 hrs"),
+  createData(15,"Problemas con la impresora","Impresora",2,"2022-07-08","Cerrado","2022-07-11","Baja","2022-07-11","2 días con 3 hrs"),
+  createData(16,"Problemas con la impresora","Impresora",2,"2022-07-08","Cerrado","2022-07-11","Baja","2022-07-11","2 días con 3 hrs"),
     
 ];
 
+let Originrows = [
+    createData(1,"Problemas de Conexion","Wifi",1,"2022-06-11","Abierto","2022-07-12","Alta","2022-07-12","1 Mes 6 Hrs"),
+    createData(2,"Problemas con la impresora","Impresora",2,"2022-07-08","Cerrado","2022-07-11","Media","2022-07-11","2 días con 3 hrs"),
+    createData(3,"SAP","Impresora",2,"2022-07-08","Cerrado","2022-07-11","Baja","2022-07-11","2 días con 3 hrs"),
+    createData(4,"RED","Impresora",2,"2022-07-08","Cerrado","2022-07-11","Alta","2022-07-11","2 días con 3 hrs"),
+    createData(5,"Excel","Impresora",2,"2022-07-08","Cerrado","2022-07-11","Alta","2022-07-11","2 días con 3 hrs"),
+    createData(6,"WORD","Impresora",2,"2022-07-08","Cerrado","2022-07-11","Alta","2022-07-11","2 días con 3 hrs"),
+    createData(7,"Wifi","Impresora",2,"2022-07-08","Cerrado","2022-07-11","Alta","2022-07-11","2 días con 3 hrs"),
+    createData(8,"Corte","Impresora",2,"2022-07-08","Cerrado","2022-07-11","Media","2022-07-11","2 días con 3 hrs"),
+    createData(9,"Red","Impresora",2,"2022-07-08","Cerrado","2022-07-11","Media","2022-07-11","2 días con 3 hrs"),
+    createData(10,"Excel","Impresora",2,"2022-07-08","Cerrado","2022-07-11","Baja","2022-07-11","2 días con 3 hrs"),
+    createData(11,"Problemas con la impresora","Impresora",2,"2022-07-08","Cerrado","2022-07-11","Baja","2022-07-11","2 días con 3 hrs"),
+    createData(12,"Problemas con la impresora","Impresora",2,"2022-07-08","Cerrado","2022-07-11","Baja","2022-07-11","2 días con 3 hrs"),
+    createData(13,"Problemas con la impresora","Impresora",2,"2022-07-08","Cerrado","2022-07-11","Baja","2022-07-11","2 días con 3 hrs"),
+    createData(14,"Problemas con la impresora","Impresora",2,"2022-07-08","Cerrado","2022-07-11","Baja","2022-07-11","2 días con 3 hrs"),
+    createData(15,"Problemas con la impresora","Impresora",2,"2022-07-08","Cerrado","2022-07-11","Baja","2022-07-11","2 días con 3 hrs"),
+    createData(16,"Problemas con la impresora","Impresora",2,"2022-07-08","Cerrado","2022-07-11","Baja","2022-07-11","2 días con 3 hrs"),
+      
+  ];
+
+
+
+  function filtrar(filterCamp){
+    const Result = Originrows.filter((e)=>{if(e.category.toString().toLowerCase().includes(filterCamp.toLowerCase()) || e.subject.toString().toLowerCase().includes(filterCamp.toLowerCase()) || e.fkUser.toString().toLowerCase().includes(filterCamp.toLowerCase()))
+    {
+        return e
+    }
+    else return null
+
+    })
+    rows = Result
+  }
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
     return -1;
@@ -217,6 +252,15 @@ function EnhancedTableHead(props) {
 
 const EnhancedTableToolbar = (props) => {
   const { numSelected } = props;
+  const [search, setSearch] = useState("")
+  const handleChange = (e)=>{
+    setSearch (search => search = e.target.value)
+    filtrar(search)
+}
+  const resetSearch = () => {
+    setSearch("");
+    rows= Originrows
+  };
 
   return (
     <Toolbar
@@ -242,7 +286,19 @@ const EnhancedTableToolbar = (props) => {
           {numSelected} selected
         </Typography>
       ) : (
-        <></>
+        <Paper square sx={{ display: "flex", width:"50%" }}>
+              <InputBase
+              size="small"
+                sx={{ ml: 1, flex: "1" }}
+                value={search}
+                onChange={e=>handleChange(e)}
+                placeholder="Necesito..."
+                inputProps={{ "aria-label": "¿Como puedo ayudarte?" }}
+              />
+              <IconButton type="submit" sx={{ p: "10px" }} aria-label="search" onClick={resetSearch}>
+                <SearchIcon />
+              </IconButton>
+            </Paper>
       )}
 
       {numSelected > 0 ? (
@@ -258,13 +314,15 @@ const EnhancedTableToolbar = (props) => {
   );
 };
 
-export default function Recently(props) {
-  const [order, setOrder] = React.useState("asc");
-  const [orderBy, setOrderBy] = React.useState("ID");
-  const [selected, setSelected] = React.useState([]);
-  const [page, setPage] = React.useState(0);
-  const [dense, setDense] = React.useState(false);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+export default function Recently({typeTable}) {
+  
+  const [type, setType] = useState(typeTable)
+  const [order, setOrder] = useState("asc");
+  const [orderBy, setOrderBy] = useState("ID");
+  const [selected, setSelected] = useState([]);
+  const [page, setPage] = useState(0);
+  const [dense, setDense] = useState(false);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
@@ -320,10 +378,11 @@ export default function Recently(props) {
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
+ 
   return (
     <Box sx={{ width: "100%" }}>
       <Paper sx={{ width: "100%", mb: 2 }}>
-        <EnhancedTableToolbar numSelected={selected.length} />
+        <EnhancedTableToolbar numSelected={selected.length}  />
         <TableContainer>
           <Table
             sx={{ minWidth: 750 }}
@@ -346,7 +405,6 @@ export default function Recently(props) {
                 .map((row, index) => {
                   const isItemSelected = isSelected(row.ID);
                   const labelId = `enhanced-table-checkbox-${index}`;
-
                   return (
                     <TableRow
                       hover

@@ -244,7 +244,7 @@ const EnhancedTableToolbar = (props) => {
           {numSelected} Seleccionados
         </Typography>
       ) : (
-        <Paper square sx={{ display: "flex" }}>
+        <Paper square sx={{ display: "flex",  width:"50%" }}>
               <InputBase
               size="small"
                 sx={{ ml: 1, flex: "1" }}
