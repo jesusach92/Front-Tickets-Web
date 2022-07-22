@@ -12,8 +12,10 @@ import {
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import SendIcon from "@mui/icons-material/Send";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { SessionContext } from "../../session/SessionContext";
+import axios from "axios";
+import { TICKET } from "../../../helpers/Apiinstance";
 
 const theme = createTheme({
   palette: {
@@ -40,16 +42,26 @@ const theme = createTheme({
     },
   },
 });
-
+const initialTicket= {
+dateticket:Date.now(),
+subjectTicket:"",
+descriptionTicket:"",
+areaFk:null,
+categoryFk:null,
+userFk:null,
+initialPrority:null
+}
+const initialValues = [{ idCategory: 0, nameCategory: "No hay categorias disponibles" }];
 const NewTicket = () => {
   const [state] = useContext(SessionContext);
   const { user } = state;
   const navigate = useNavigate();
-  const [data, setData] = useState({});
+  const [data, setData] = useState(initialTicket);
+  const [area, setArea] = useState([]);
+  const [category, setCategory] = useState(initialValues);
 
   const sendData = (event) => {
     event.preventDefault();
-    const _formData = new FormData(event.currentTarget);
     setData();
   };
 
@@ -62,6 +74,36 @@ const NewTicket = () => {
     alert("No te vayas");
     return "";
   };
+  const getAreas = async () => {
+    try {
+      const { data } = await TICKET.get(`/area`, {
+        headers: {
+          Authorization: `${user.token}`,
+        },
+      });
+      setArea(data);
+    } catch (error) {
+      console.log(error.response);
+    }
+  };
+  useEffect(() => {
+    getAreas();
+  }, []);
+
+  const getCategory = async (e) => {
+    
+    try {
+      const { data } = await TICKET.get(`/category/area/${e.target.value}`, {
+        headers: {
+          Authorization: `${user.token}`,
+        },
+      });
+      setCategory(data);
+    } catch (error) {
+      if (error.response.status === 404) setCategory(initialValues);
+    }
+  };
+
   return (
     <Box>
       <Grid
@@ -131,6 +173,8 @@ const NewTicket = () => {
                     placeholder="Asunto"
                     size="small"
                     margin="normal"
+                    value={data?.subjectTicket || ""}
+                    onChange={e=>setData({...data,subjectTicket:e.target.value})}
                     sx={{
                       [theme.breakpoints.down("lg")]: {
                         width: "100%",
@@ -142,11 +186,13 @@ const NewTicket = () => {
                   ></TextField>
                   <TextField
                     select
-                    name="cetegory"
+                    name="area"
                     size="small"
-                    label="Categoria"
-                    helperText="Selecciona tu categoria"
+                    label="Area"
+                    helperText="Selecciona el Área"
                     margin="normal"
+                    value={data?.areaFk || ""}
+                    onChange={(e) => {getCategory(e);setData({...data,areaFk:e.target.value})}}
                     sx={{
                       [theme.breakpoints.down("lg")]: {
                         width: "100%",
@@ -156,15 +202,39 @@ const NewTicket = () => {
                       },
                     }}
                   >
-                    <MenuItem value={1}>Redes</MenuItem>
-
-                    <MenuItem value={2}>Wifi</MenuItem>
-
-                    <MenuItem value={3}>Programacion</MenuItem>
-
-                    <MenuItem value={4}>Impresoras</MenuItem>
-
-                    <MenuItem value={5}>Equipos</MenuItem>
+                    <MenuItem value={0} disabled>Selecciona el Área</MenuItem>
+                    {area.map((e) => (
+                      <MenuItem key={e.idArea} value={e.idArea}>
+                        {e.nameArea}
+                      </MenuItem>
+                    ))}
+                  </TextField>
+                  <TextField
+                    select
+                    name="category"
+                    size="small"
+                    label="Categoria"
+                    helperText="Selecciona tu categoria"
+                    margin="normal"
+                    value={data?.categoryFk || ""}
+                    onChange={(e) => {setData({...data,categoryFk:e.target.value})}}  
+                    sx={{
+                      [theme.breakpoints.down("lg")]: {
+                        width: "100%",
+                      },
+                      [theme.breakpoints.up("sm")]: {
+                        width: "51%",
+                      },
+                    }}
+                  >
+                     <MenuItem value={0} disabled>Selecciona la Categoria
+                     </MenuItem>
+                    {category &&
+                      category.map((e) => (
+                        <MenuItem value={e.idCategory}>
+                          {e.nameCategory}
+                        </MenuItem>
+                      ))}
                   </TextField>
                   <TextField
                     name="message"
@@ -174,6 +244,8 @@ const NewTicket = () => {
                     rows={10}
                     required
                     size="small"
+                    value={data?.descriptionTicket || ""}
+                    onChange={(e) => {setData({...data,descriptionTicket:e.target.value})}}  
                     sx={{
                       [theme.breakpoints.down("lg")]: {
                         width: "100%",
@@ -251,6 +323,7 @@ const NewTicket = () => {
                     size="small"
                     label="Prioridad"
                     margin="normal"
+
                     sx={{
                       [theme.breakpoints.down("lg")]: {
                         width: "100%",
@@ -260,9 +333,10 @@ const NewTicket = () => {
                       },
                     }}
                   >
-                    <MenuItem value={"Alta"}>Alta</MenuItem>
-                    <MenuItem value={"Media"}>Media</MenuItem>
-                    <MenuItem value={"Baja"}>Baja</MenuItem>
+                    <MenuItem value={1}>Alta</MenuItem>
+                    <MenuItem value={3}>Media</MenuItem>
+                    <MenuItem value={2}>Baja</MenuItem>
+                    <MenuItem value={4}>Urgente</MenuItem>
                   </TextField>
                 </Grid>
                 <Grid item xs={12} mb={5}>
